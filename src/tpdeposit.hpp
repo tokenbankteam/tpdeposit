@@ -62,7 +62,7 @@ namespace tptpdeposit {
         void transfer(name from, name to, asset quantity, string memo);
 
         [[eosio::action]]
-        void deldeposit(eosio::name owner);
+        void deldeposit(uint64_t id);
 
     private:
 

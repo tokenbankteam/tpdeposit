@@ -39,11 +39,11 @@ void tpdeposit::_dodeposit(eosio::name account, eosio::name code, asset balance,
     });
 }
 
-void tpdeposit::deldeposit(eosio::name owner) {
+void tpdeposit::deldeposit(uint64_t id) {
     require_auth(_self);
 
-    auto it = _deposit.find(owner.value);
-    check(it != _deposit.end(), "owner not exist");
+    auto it = _deposit.find(id);
+    check(it != _deposit.end(), std::to_string(id) + " id not exist");
     _deposit.erase(it);
 }
 
