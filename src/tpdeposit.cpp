@@ -30,12 +30,19 @@ void tpdeposit::transfer(name from, name to, asset quantity, string memo) {
 }
 
 void tpdeposit::_dodeposit(eosio::name account, eosio::name code, asset balance, string memo) {
+    auto size = transaction_size();
+    char buf[size];
+    uint32_t read = read_transaction(buf, size);
+    eosio_assert(size == read, "read_transaction failed");
+    checksum256 hash = eosio::sha256(buf, read);
+
     _deposit.emplace(_self, [&](auto &s) {
         s.id = atoll(memo.c_str());
         s.owner = account;
         s.code = code;
         s.balance = balance;
         s.timestamp = now();
+        s.hash = hash;
     });
 }
 

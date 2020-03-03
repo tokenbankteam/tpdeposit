@@ -72,10 +72,11 @@ namespace tptpdeposit {
             eosio::name code;
             asset balance;
             uint64_t timestamp; //交易时间
+            checksum256 hash;
 
             uint64_t primary_key() const { return id; }
 
-            EOSLIB_SERIALIZE(deposit, (id)(owner)(code)(balance)(timestamp)
+            EOSLIB_SERIALIZE(deposit, (id)(owner)(code)(balance)(timestamp)(hash)
             )
         };
 
