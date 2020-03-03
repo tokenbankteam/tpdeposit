@@ -22,7 +22,7 @@ add_subdirectory(tpdeposit)
  
 ```
 //创建帐号
-cleos -u 'https://kylin.eos.dfuse.io' system newaccount itokenpocket tpdeposit111 EOS61Lv9AArofgBUhE4JKtJ5zJrLdRbNBwgPc5sWsxMNT6HtNm5py EOS8gE7XgUVLmF8CN9CCixNaVGFzbxvagVdMm6pqP47eMpuRMUDx8 --buy-ram '10.0000 EOS' --stake-net '5.0000 EOS' --stake-cpu '20.0000 EOS'
+cleos -u 'https://kylin.eos.dfuse.io' system newaccount itokenpocket tpdeposit111 EOS61Lv9AArofgBUhE4JKtJ5zJrLdRbNBwgPc5sWsxMNT6HtNm5py EOS8gE7XgUVLmF8CN9CCixNaVGFzbxvagVdMm6pqP47eMpuRMUDx8 --buy-ram '10.0000 EOS' --stake-net '1.0000 EOS' --stake-cpu '10.0000 EOS'
 
 cd build
 cleos -u 'https://kylin.eos.dfuse.io' set contract tpdeposit111 ./tpdeposit -p tpdeposit111
