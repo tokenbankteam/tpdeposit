@@ -23,6 +23,11 @@ void tpdeposit::transfer(name from, name to, asset quantity, string memo) {
     if (!(from != _self && to == _self)) {
         return;
     }
+#if TEST
+
+#else
+    check(_code == eosio::name("tethertether") && quantity.amount > 100000, "quantity too small");
+#endif
     eosio::name code = _code;
     asset balance = quantity;
     eosio::name account = from;
@@ -33,7 +38,7 @@ void tpdeposit::_dodeposit(eosio::name account, eosio::name code, asset balance,
     auto size = transaction_size();
     char buf[size];
     uint32_t read = read_transaction(buf, size);
-    eosio_assert(size == read, "read_transaction failed");
+    check(size == read, "read_transaction failed");
     checksum256 hash = eosio::sha256(buf, read);
 
     _deposit.emplace(_self, [&](auto &s) {
