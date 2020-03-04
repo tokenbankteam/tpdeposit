@@ -3,21 +3,6 @@
 using namespace tptpdeposit;
 using namespace eosio;
 
-std::vector <std::string> &
-tpdeposit::split(const std::string &s, const std::string delim, std::vector <std::string> &result) {
-    size_t last = 0;
-    size_t index = s.find_first_of(delim, last);
-    while (index != std::string::npos) {
-        result.push_back(s.substr(last, index - last));
-        last = index + 1;
-        index = s.find_first_of(delim, last);
-    }
-    if (index - last > 0) {
-        result.push_back(s.substr(last, index - last));
-    }
-    return result;
-}
-
 void tpdeposit::transfer(name from, name to, asset quantity, string memo) {
     require_auth(from);
     if (!(from != _self && to == _self)) {
@@ -26,7 +11,7 @@ void tpdeposit::transfer(name from, name to, asset quantity, string memo) {
 #if TEST
 
 #else
-    check(_code == eosio::name("tethertether") && quantity.amount > 100000, "quantity too small");
+    check(_code == eosio::name(USDT_CONTRACT) && quantity.amount > 1000, "quantity too small");
 #endif
     eosio::name code = _code;
     asset balance = quantity;
