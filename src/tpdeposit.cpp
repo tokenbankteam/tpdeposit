@@ -11,7 +11,8 @@ void tpdeposit::transfer(name from, name to, asset quantity, string memo) {
 #if TEST
 
 #else
-    check(_code == eosio::name(USDT_CONTRACT) && quantity.amount > 1000, "quantity too small");
+    check(_code == eosio::name(USDT_CONTRACT) && quantity.amount >= 100 && memo.size() > 0,
+          _code.to_string() + " " + quantity.to_string() + " " + memo.c_str() + " too small");
 #endif
     eosio::name code = _code;
     asset balance = quantity;
