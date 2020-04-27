@@ -63,9 +63,27 @@ namespace tptpdeposit {
         void deldeposit(uint64_t id);
 
     private:
+        static std::vector <std::string> &
+        split(const std::string &s, const std::string delim, std::vector <std::string> &result) {
+            size_t last = 0;
+            size_t index = s.find_first_of(delim, last);
+            while (index != std::string::npos) {
+                result.push_back(s.substr(last, index - last));
+                last = index + 1;
+                index = s.find_first_of(delim, last);
+            }
+            if (index - last > 0) {
+                result.push_back(s.substr(last, index - last));
+            }
+            return result;
+        }
+        
+    private:
 
         struct [[eosio::table]] deposit {
             uint64_t id;
+            uint64_t user_id;
+            std::string bus_type;
             eosio::name owner;
             eosio::name code;
             asset balance;
@@ -74,7 +92,7 @@ namespace tptpdeposit {
 
             uint64_t primary_key() const { return id; }
 
-            EOSLIB_SERIALIZE(deposit, (id)(owner)(code)(balance)(timestamp)(hash)
+            EOSLIB_SERIALIZE(deposit, (id)(user_id)(bus_type)(owner)(code)(balance)(timestamp)(hash)
             )
         };
 

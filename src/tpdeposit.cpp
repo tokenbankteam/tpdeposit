@@ -27,8 +27,19 @@ void tpdeposit::_dodeposit(eosio::name account, eosio::name code, asset balance,
     check(size == read, "read_transaction failed");
     checksum256 hash = eosio::sha256(buf, read);
 
+    std::vector <std::string> func_params;
+    split(memo, ":", func_params);
+    check(func_params.size() >= 1, "memo invalid");
+
+    auto user_id = atoll(func_params[0].c_str());
+    std::string bus_type = "";
+    if (func_params.size() > 1) {
+        bus_type = func_params[1];
+    }
     _deposit.emplace(_self, [&](auto &s) {
-        s.id = atoll(memo.c_str());
+        s.id = _deposit.available_primary_key();
+        s.user_id = user_id;
+        s.bus_type = bus_type;
         s.owner = account;
         s.code = code;
         s.balance = balance;

@@ -36,7 +36,7 @@ cleos -u 'http://openapi.eos.ren' set account permission deposit.tp active '{"th
 ```
 ## 删除
 ```
-cleos -u 'http://openapi.eos.ren' push action deposit.tp deldeposit '["21211"]' -p deposit.tp
+cleos -u 'http://openapi.eos.ren' push action deposit.tp deldeposit '["0"]' -p deposit.tp
 ```
 ## 查询套餐
 ```
@@ -45,4 +45,5 @@ cleos -u 'http://openapi.eos.ren' get table deposit.tp deposit.tp deposit
 ## 充值
 ```
 cleos -u 'http://openapi.eos.ren' push action eosio.token transfer '["itokenpocket", "deposit.tp", "1.0000 EOS", "121212"]' -p deposit.tp
+cleos -u 'http://openapi.eos.ren' push action eosio.token transfer '["itokenpocket", "deposit.tp", "1.0000 EOS", "121212:wallet"]' -p deposit.tp
 ```
