@@ -11,10 +11,15 @@ void tpdeposit::transfer(name from, name to, asset quantity, string memo) {
 #if TEST
 
 #else
-    check(_code == eosio::name(USDT_CONTRACT) && quantity.amount >= 100 && memo.size() > 0,
-          _code.to_string() + " " + quantity.to_string() + " " + memo.c_str() + " too small");
+    if (_self == eosio::name(USDT_CONTRACT)) {
+        check(quantity.amount >= 100 && memo.size() > 0,
+              _self.to_string() + " " + quantity.to_string() + " " + memo.c_str() + " too small");
+    } else if (_self == eosio::name(EOS_CONTRACT)) {
+        check(quantity.amount >= 100 && memo.size() > 0,
+              _self.to_string() + " " + quantity.to_string() + " " + memo.c_str() + " too small");
+    }
 #endif
-    eosio::name code = _code;
+    eosio::name code = _self;
     asset balance = quantity;
     eosio::name account = from;
     _dodeposit(account, code, balance, memo);
@@ -43,7 +48,7 @@ void tpdeposit::_dodeposit(eosio::name account, eosio::name code, asset balance,
         s.owner = account;
         s.code = code;
         s.balance = balance;
-        s.timestamp = now();
+        s.timestamp = current_time_point().time_since_epoch().to_seconds();
         s.hash = hash;
     });
 }
